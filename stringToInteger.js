@@ -56,11 +56,11 @@ var myAtoi = function(str) {
         tensPlace++;
       }
 
+      var integerMax = 2147483647;
+      var integerMin = -2147483648;
       integer = negative ? integer * -1 : integer;
       integer = integer > integerMax ? integerMax : integer;
       integer = integer < integerMin ? integerMin : integer;
-      var integerMax = 2147483647;
-      var integerMin = -2147483648;
       return integer;
     }
   } else {
