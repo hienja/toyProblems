@@ -39,6 +39,33 @@ var convertToTitle = function(n) {
   return title;
 };
 
+// var convertToTitle = function(n) {
+//   if(n === 0) {
+//       return "";
+//   }
+//   var title = "";
+//   var list = [];
+//   var remainder = n % 26;
+//   if(remainder !== 0 || n / 26 < 26){
+//     list.push(remainder);
+//   }
+  
+//   while(n > 26) {
+//     n = Math.floor(n / 26);
+//     if(remainder === 0) {
+//       list.push(n % 26 - 1);
+//     } else {
+//       list.push(n % 26);
+//     }
+//   }
+
+//   for(var i = list.length - 1; i >= 0; i--) {
+//     title += alphabet[list[i]];    
+//   }
+  
+//   return title;
+// };
+
 var alphabet = {
   1: "A",
   2: "B",
