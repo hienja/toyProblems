@@ -27,7 +27,7 @@ Count the number of prime numbers less than a non-negative number, n.
 // };
 
 var countPrimes = function(n) {
-  var numberList = [];
+  var numberList = {};
   var count = 0;
   for (var i = 2; i < n; i++) {
     if (!numberList[i]) {
