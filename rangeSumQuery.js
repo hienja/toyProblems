@@ -51,6 +51,24 @@ NumArray.prototype.sumRange = function(i, j) {
   return sum;
 };
 
+//Slower varitation
+// var NumArray = function(nums) {
+//   this.sumList = [];
+
+//   var 
+//   for(var i = 0; i < nums.length; i++) {
+//     this.sumList[i] = 0
+//     for(var j = i; j < nums.length; j++) {
+//       this.sumList[i] += nums[j];
+//     }
+//   }
+// };
+
+// NumArray.prototype.sumRange = function(i, j) {
+//   var notIncluded = this.sumList[j + 1] ? this.sumList[j + 1] : 0;
+//   return this.sumList[i] - notIncluded;
+// };
+
 var object = new NumArray([1, 4, -6])
-console.log(object.halfList)
+console.log(object.sumList)
 console.log(object.sumRange(0,2));
