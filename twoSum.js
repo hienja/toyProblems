@@ -16,7 +16,7 @@ var twoSum = function(nums, target) {
 
   for(var i = 0; i < nums.length; i++) {
     if(list[nums[i]]) {
-      list[nums[i]].push(i)
+      list[nums[i]][1] = i;
     } else {
       list[nums[i]] = [i];
     }
@@ -27,7 +27,7 @@ var twoSum = function(nums, target) {
       if(list[target - key].length === 2) {
         indices = list[key];
       } else {
-        indices = list[key].concat(list[target - key]);
+        indices = [list[key][0], list[target - key][0]];
       }
       break;
     }
