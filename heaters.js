@@ -23,74 +23,44 @@ Explanation: The two heater was placed in the position 1 and 4. We need to use r
 */
 
 var findRadius = function(houses, heaters) {
-	houses = houses.sort();
-    heaters = heaters.sort();
-	var firstHouse = houses[0];
-	var lastHouse = houses[houses.length - 1];
-	var firstHeater = heaters[0];
-	var lastHeater = heaters[heaters.length - 1]
-	var closestHeaterFromLastHouse;
-	var closestHeaterFromFirstHouse;
-    var radiusBetweenHeaters = 0;
-    var firstHouseToFirstHeater = 0;
-    var lastHousetoLastHeater = 0;
+	houses = houses.sort(function(a,b){return a - b});
+    heaters = heaters.sort(function(a,b){return a - b});
+    var minRadius = 0;
+    var combinedList = [];
+    var i = 0;
+    var j = 0;
+    var condition = true;
+    while (condition) {
+        if (houses[i] > heaters[j] || i === houses.length) {
+            combinedList.push([heaters[j], 'heater']);
+            j++;
+        } else if (houses[i] < heaters[j] || j === heaters.length) {
+            combinedList.push([houses[i], 'house']);
+            i++;
+        } else {
+            combinedList.push([heaters[j], 'heater']);
+            i++;
+            j++;
+        }
 
-    for (var i = 0; i < heaters.length; i++) {
-    	var currentHeater = heaters[i];
-    	var previousHeater = heaters[i - 1];
-    	if (currentHeater < firstHouse) {
-    		closestHeaterFromLastHouse = lastHouse - currentHeater;
-    	} else if (currentHeater > lastHouse) {
-    		if (!closestHeaterFromFirstHouse) {
-    			if (previousHeater && previousHeater >= firstHouse) {
-					var radius = currentHeater - previousHeater;
-	    			if (radius % 2 !== 0) {
-	    				radius--;
-	    			}
-	    			radius /= 2;
-    				lastHousetoLastHeater = Math.min(lastHouse - previousHeater, radius);
-    			}
-				closestHeaterFromFirstHouse = currentHeater - firstHouse;
-    		}
-    	} else {
-    		if (previousHeater) {
-    			var radius = currentHeater - previousHeater;
-    			if (radius % 2 !== 0) {
-    				radius--;
-    			}
-    			radius /= 2;
-    			if (radius > radiusBetweenHeaters) {
-    				radiusBetweenHeaters = radius;
-    			}
 
-    			if (!firstHouseToFirstHeater) {
-					var radius = currentHeater - previousHeater;
-	    			if (radius % 2 !== 0) {
-	    				radius--;
-	    			}
-	    			radius /= 2;
-    				firstHouseToFirstHeater = Math.min(currentHeater - firstHouse, radius);
-    			}
-    		} else {
-				firstHouseToFirstHeater = currentHeater - firstHouse;
-    		}
-    		if (i === heaters.length - 1 && !closestHeaterFromFirstHouse) {
-				lastHousetoLastHeater = lastHouse - previousHeater;
-    		}
-    	}
-    }
-    var insideRadius = Math.max(radiusBetweenHeaters, firstHouseToFirstHeater, lastHousetoLastHeater);
-    var outsideRadius;
-    if (closestHeaterFromLastHouse && closestHeaterFromFirstHouse) {
-    	outsideRadius = Math.min(closestHeaterFromLastHouse, closestHeaterFromFirstHouse);
-    } else if (closestHeaterFromLastHouse) {
-    	outsideRadius = closestHeaterFromLastHouse;
-    } else {
-    	outsideRadius = closestHeaterFromFirstHouse;
+        if (i === houses.length && j === heaters.length) {
+            condition = false;
+        }
     }
 
-    return insideRadius ? insideRadius : outsideRadius;
+    for (var k = 0; k < combinedList.length - 1; k++) {
+        if (combinedList[k][1] !== combinedList[k + 1][1]) {
+            var radius = combinedList[k + 1][0] - combinedList[k][0];
+            if (radius > minRadius) {
+                minRadius = radius;
+            }
+        }
+    }
+
+    return minRadius;
 };
 
-console.log(findRadius([282475249,622650073,984943658,144108930,470211272,101027544,457850878,458777923],
-[823564440,115438165,784484492,74243042,114807987,137522503,441282327,16531729,823378840,143542612])) //answer is 161834419
+// console.log(findRadius([282475249,622650073,984943658,144108930,470211272,101027544,457850878,458777923],
+// [823564440,115438165,784484492,74243042,114807987,137522503,441282327,16531729,823378840,143542612])) //answer is 161834419
+console.log(findRadius([1,2,3,4], [1,4]))
