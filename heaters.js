@@ -26,35 +26,55 @@ var findRadius = function(houses, heaters) {
 	houses = houses.sort(function(a,b){return a - b});
     heaters = heaters.sort(function(a,b){return a - b});
     var minRadius = 0;
-    var combinedList = [];
+    var houseNodes = [];
     var i = 0;
     var j = 0;
     var condition = true;
-    while (condition) {
-        if (houses[i] > heaters[j] || i === houses.length) {
-            combinedList.push([heaters[j], 'heater']);
-            j++;
-        } else if (houses[i] < heaters[j] || j === heaters.length) {
-            combinedList.push([houses[i], 'house']);
-            i++;
-        } else {
-            combinedList.push([heaters[j], 'heater']);
-            i++;
-            j++;
+    for (var k = 0; k < houses.length; k++) {
+        houseNodes.push({});
+        houseNodes[k].value = houses[k];
+        houseNodes[k].left = -1000000000;
+        houseNodes[k].right = 2000000000;
+        while (true) {
+            if(houseNodes[k].value - heaters[i] >= 0) {
+                if (houseNodes[k].value - heaters[i] < houseNodes[k].value - houseNodes[k].left) {
+                    houseNodes[k].left = heaters[i];
+                }
+
+                if(i === heaters.length - 1) {
+                    break;
+                } else {
+                    i++;
+                }
+            } else {
+                if(i !== 0) {
+                    i--;
+                }
+                break;
+            }
         }
 
+        while (true) {
+            if(heaters[j] - houseNodes[k].value >= 0) {
+                if (heaters[j] - houseNodes[k].value < houseNodes[k].right - houseNodes[k].value) {
+                    houseNodes[k].right = heaters[j];
+                    break;
+                }
+            } else {
+                if (j === heaters.length - 1) {
+                    break;
+                } else {
+                    j++;
+                }
+            }
 
-        if (i === houses.length && j === heaters.length) {
-            condition = false;
         }
     }
-
-    for (var k = 0; k < combinedList.length - 1; k++) {
-        if (combinedList[k][1] !== combinedList[k + 1][1]) {
-            var radius = combinedList[k + 1][0] - combinedList[k][0];
-            if (radius > minRadius) {
-                minRadius = radius;
-            }
+    console.log(houseNodes);
+    for(var l = 0; l < houseNodes.length; l++) {
+        var radius = Math.min(houseNodes[l].value - houseNodes[l].left, houseNodes[l].right - houseNodes[l].value);
+        if (radius > minRadius) {
+            minRadius = radius;
         }
     }
 
@@ -63,4 +83,4 @@ var findRadius = function(houses, heaters) {
 
 // console.log(findRadius([282475249,622650073,984943658,144108930,470211272,101027544,457850878,458777923],
 // [823564440,115438165,784484492,74243042,114807987,137522503,441282327,16531729,823378840,143542612])) //answer is 161834419
-console.log(findRadius([1,2,3,4], [1,4]))
+console.log(findRadius([474833169,264817709,998097157,817129560], [197493099,404280278,893351816,505795335]))
