@@ -13,34 +13,20 @@ You may assume that nums1 has enough space (size that is greater or equal to m +
  * @return {void} Do not return anything, modify nums1 in-place instead.
  */
 var merge = function(nums1, m, nums2, n) {
-  var i = 0;
-  var j = 0;
+  var i = m - 1;
+  var j = n - 1;
+  var k = m + n - 1;
 
-  for(var k = 0; k < n; k++) {
-  	nums1[m + k] = nums2[k]
+  while(i >= 0 && j >= 0) {
+  	if(nums1[i] < nums2[j]) {
+  		nums1[k--] = nums2[j--];
+  	} else {
+      nums1[k--] = nums1[i--];
+  	}
   }
 
-  while(i <= m && j <= n) {
-  	if(nums1[m + j] < nums1[i]) {
-  		var temp = nums1[i];
-  		nums1[i] = nums1[m + j];
-  		nums1[m + j] = temp;
-
-  		var currentNums2 = m + j;
-  		while(nums1[currentNums2] > nums1[currentNums2 + 1]) {
-  			temp = nums1[currentNums2];
-  			nums1[currentNums2] = nums1[currentNums2 + 1];
-  			nums1[currentNums2 + 1] = temp;
-  			currentNums2++;
-  		}
-  		i++;
-  	} else {
-  		if(nums1[m + j] < nums1[i]) {
-	  		j++;
-  		} else {
-  			i++;
-  		}
-  	}
+  while(j >= 0) {
+    nums1[k--] = nums2[j--];
   }
 };
 
