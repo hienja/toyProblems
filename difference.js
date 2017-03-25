@@ -11,16 +11,32 @@ between i and j is at most k.
  * @return {boolean}
  */
 var containsNearbyDuplicate = function(nums, k) {
-	var numberList = {};
-	var i = 0;
-	while(i !== nums.length)  {
-		if(numberList[nums[i] + k] || numberList[nums[i] - k]) {
-			return true;
-		}
-		numberList[nums[i]] = true;
-		i++;
+	if(nums.length < 2) {
+		return false;
 	}
+
+	var duplicateList = {};
+
+	for(var i = 0; i < nums.length; i++) {
+		if(!duplicateList[nums[i]]) {
+			duplicateList[nums[i]] = [];
+			duplicateList[nums[i]].push(i);
+		} else {
+			duplicateList[nums[i]].push(i);
+		}
+	}
+
+	for(var list in duplicateList) {
+		if(duplicateList[list].length >= 2) {
+			for(var j = duplicateList[list].length - 1; j > 0; j--) {
+				if(duplicateList[list][j] - duplicateList[list][j - 1] <= k) {
+					return true;
+				}
+			}
+		}
+	}
+
 	return false;
 };
 
-console.log(containsNearbyDuplicate([1,4,12], 1))
+console.log(containsNearbyDuplicate([1,2,3,1,2,3], 2))
