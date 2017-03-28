@@ -19,35 +19,24 @@ You may assume pattern contains only lowercase letters, and str contains lowerca
  * @return {boolean}
  */
 var wordPattern = function(pattern, str) {
-	str = str.split(' ');
-	var patternString = "";
-	var strString = "";
-	var patternList = {};
-	var strList  = {};
-	var patternNumber = 1;
-	var strNumber = 1;
+	str = str.split(" ");
+	var patternIndex = {};
+	var strIndex = {};
+	if(pattern.length !== str.length) return false;
 
-	for(var i = 0; i < pattern.length; i++) {
-		if(!patternList[pattern[i]]) {
-			patternList[pattern[i]] = patternNumber;
-			patternString += patternList[pattern[i]];
-			patternNumber++;
-		} else {
-			patternString += patternList[pattern[i]];
+	for(var i = 0; i < str.length; i++) {
+		if(patternIndex[pattern[i]] === undefined) {
+			patternIndex[pattern[i]] = i;
+		}
+		if(strIndex[str[i]] === undefined ) {
+			strIndex[str[i]] = i;
+		}
+		if(patternIndex[pattern[i]] !== strIndex[str[i]]) {
+			return false;
 		}
 	}
 
-	for(var j = 0; j < str.length; j++) {;
-		if(!strList[str[j]]) {
-			strList[str[j]] = strNumber;
-			strString += strList[str[j]];
-			strNumber++;
-		} else {
-			strString +=strList[str[j]];
-		}
-	}
-
-	return patternString === strString ? true : false;
+	return true;
 };
 
 console.log(wordPattern('abba', 'dog cat cat dog'))
