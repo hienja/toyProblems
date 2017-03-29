@@ -16,18 +16,37 @@ The minimum depth is the number of nodes along the shortest path from the root n
  * @return {number}
  */
 var minDepth = function(root) {
+	// if(!root) return 0;
+	// var minDepth = Number.MAX_SAFE_INTEGER;
+	// var searchDepth = function(node, depth) {
+	// 	if(depth < minDepth) {
+	// 		if(node.left && node.right) {
+	// 			searchDepth(node.left, depth+1);
+	// 			searchDepth(node.right, depth+1);
+	// 		} else if(node.left) {
+	// 			searchDepth(node.left, depth+1);
+	// 		} else if(node.right) {
+	// 			searchDepth(node.right, depth+1);
+	// 		} else {
+	// 			minDepth = depth;
+	// 		}
+	// 	}
+	// }
+
+	// searchDepth(root, 1);
+
+	// return minDepth;
+
+	if(!root) return 0;
 	var minDepth = Number.MAX_SAFE_INTEGER;
 	var searchDepth = function(node, depth) {
-		if(depth < minDepth) {
-			if(node.left && node.right) {
-				searchDepth(node.left, depth+1);
-				searchDepth(node.right, depth+1);
-			} else if(node.left) {
-				searchDepth(node.left, depth+1);
-			} else if(node.right) {
-				searchDepth(node.right, depth+1);
-			} else {
-				minDepth = depth;
+		if(node !== null) {
+			if(depth < minDepth) {
+				if(!node.left && !node.right) {
+					minDepth = depth					
+				}
+				searchDepth(node.left, depth + 1);
+				searchDepth(node.right, depth + 1);
 			}
 		}
 	}
