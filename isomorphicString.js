@@ -29,16 +29,13 @@ var isIsomorphic = function(s, t) {
 		if(sPattern[s[i]] === undefined) {
 			sPattern[s[i]] = i;
 		}
-	} 
-
-	for(var j = 0; j < t.length; j++) {
-		if(tPattern[t[j]] === undefined) {
-			tPattern[t[j]] = j;
+		if(tPattern[t[i]] === undefined) {
+			tPattern[t[i]] = i;
 		}
-		if(tPattern[t[j]] !== sPattern[s[j]]) {
+		if(tPattern[t[i]] !== sPattern[s[i]]) {
 			return false;
 		}
-	}
+	} 
 
 	return true;
 };
