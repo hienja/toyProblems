@@ -44,3 +44,20 @@ var buildArray = function(nums) {
     }
     return ans;
 };
+
+var buildEuclideanArray = nums => {
+    const q = nums.length;
+
+    //turn the array into a=qb+r
+    for (let i = 0; i < q; i++) {
+        const r = nums[i];
+        const b = nums[nums[i]] % q;
+        nums[i] = q * b + r;
+    }
+
+    //extract just the final b values since r < q
+    for (let j = 0; j < q; j++) {
+        nums[j] = Math.floor(nums[j] / q);
+    }
+    return nums;
+};
